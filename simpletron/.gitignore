@@ -1,0 +1,19 @@
+# --- Ignore Build Directory ---
+# Ignore binary output
+bin/
+# Ignore compiled files
+*.exe
+# Ignore IDE specific files
+.vscode/
+
+build/
+
+include/templates.h
+
+nexus_build/
+
+*.nexus
+
+src_files.h
+
+Assign1.html
