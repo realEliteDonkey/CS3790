@@ -21,10 +21,14 @@ To build the project, use the provided build system or compile manually:
 
 ```sh
 gcc -Iinclude -o bin/simpletron [main.c](http://_vscodecontentref_/12) [simpletron.c](http://_vscodecontentref_/13) [simpletron_opcode.c](http://_vscodecontentref_/14) [simpletron_utils.c](http://_vscodecontentref_/15)
+```
+## Running
 
-Running
 Run the Simpletron executable:
+
+```sh
 ./bin/simpletron
+```
 
 You will be prompted to either:
 
@@ -36,9 +40,9 @@ Each instruction is a 6-digit signed integer:
 First 2 digits: Opcode
 Last 4 digits: Operand (address or immediate value)
 Example:
-
+```
 200050 // LOAD [50]
-
+```
 See outline.txt for the full opcode list.
 
 Example SML Programs
@@ -47,4 +51,5 @@ arraysum.sml: Sums an array of numbers.
 gcd.sml: Computes the greatest common divisor.
 
 Author:
+
 Kaile Jones
