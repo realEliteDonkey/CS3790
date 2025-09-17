@@ -12,15 +12,15 @@ SIMPLETRON V2 is a simulated computer system implemented in C, designed for educ
 - **Sample Programs:** Includes SML files for min/max, array sum, and GCD calculations.
 
 ## Project Structure
-. ├── arraysum.sml # Sample SML program: array sum ├── gcd.sml # Sample SML program: GCD ├── minmax.sml # Sample SML program: min/max ├── outline.txt # Project and instruction set outline ├── src/ │ ├── main.c # Entry point, user interface │ ├── simpletron.c # Core execution and memory dump │ ├── simpletron_opcode.c# Opcode implementations │ └── simpletron_utils.c # Program input utilities ├── include/ │ ├── errors.h # Error codes │ ├── opcode.h # Opcode definitions │ ├── op_func.h # Opcode function declarations │ ├── simpletron.h # Simpletron struct and prototypes │ └── simpletron_utils.h # Utility function declarations └── ...
+├── arraysum.sml # Sample SML program: array sum ├── gcd.sml # Sample SML program: GCD ├── minmax.sml # Sample SML program: min/max ├── outline.txt # Project and instruction set outline ├── src/ │ ├── main.c # Entry point, user interface │ ├── simpletron.c # Core execution and memory dump │ ├── simpletron_opcode.c# Opcode implementations │ └── simpletron_utils.c # Program input utilities ├── include/ │ ├── errors.h # Error codes │ ├── opcode.h # Opcode definitions │ ├── op_func.h # Opcode function declarations │ ├── simpletron.h # Simpletron struct and prototypes │ └── simpletron_utils.h # Utility function declarations └──
 
 
 ## Building
-
-To build the project, use the provided build system or compile manually:
+This project was built and run using custom build system (linux only).
+To build the project, compile manually instead:
 
 ```sh
-gcc -Iinclude -o bin/simpletron [main.c](http://_vscodecontentref_/12) [simpletron.c](http://_vscodecontentref_/13) [simpletron_opcode.c](http://_vscodecontentref_/14) [simpletron_utils.c](http://_vscodecontentref_/15)
+gcc -Iinclude -o bin/simpletron src/main.c src/simpletron.c src/simpletron_opcode.c src/simpletron_utils.c
 ```
 ## Running
 
@@ -41,7 +41,7 @@ First 2 digits: Opcode
 Last 4 digits: Operand (address or immediate value)
 Example:
 ```
-200050 // LOAD [50]
+200050 // LOAD(20) -> memory[50]
 ```
 See outline.txt for the full opcode list.
 
@@ -50,6 +50,7 @@ minmax.sml: Finds the minimum and maximum of user inputs.
 arraysum.sml: Sums an array of numbers.
 gcd.sml: Computes the greatest common divisor.
 
-Author:
+## Author:
 
 Kaile Jones
+
