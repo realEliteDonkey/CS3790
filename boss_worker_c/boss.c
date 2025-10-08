@@ -5,47 +5,20 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <dirent.h>
-
-/**
- * @brief Structure to hold dynamic array along with a 
- * counter of prime numbers added to array
- * 
- * @param max_primes 
- * @return PrimeList* 
- */
-typedef struct PrimeList {
-    unsigned num_primes;
-    int primes[];
-} PrimeList;
+#include <assert.h>
+#include <assert.h>
+#include "primelist.h"
 
 int sort_lt(const void* p1, const void* p2);
-PrimeList* new_prime_list(size_t max_primes);
 int arg_cnt_check(int argc, char* argv[]);
 int clear_txt(const char* dir_name);
-int get_primes(PrimeList* pl, const char* dir_name);
 
-
-/**
- * @brief Allocates and initializes a new PrimeList structure to hold up to max_primes integers.
- *
- * This function dynamically allocates memory for a PrimeList structure, including space for
- * an array of integers to store prime numbers. The number of primes currently stored is
- * initialized to zero.
- *
- * @param max_primes The maximum number of prime numbers the list can hold.
- * @return Pointer to the newly allocated PrimeList structure, or NULL if allocation fails.
- */
-PrimeList* new_prime_list(size_t max_primes) {
-    PrimeList* pl = malloc(sizeof(PrimeList) + (max_primes * sizeof(int)));
-    if (!pl) return NULL;
-    pl->num_primes = 0;
-
-    return pl;
-}
 
 /**
  * @brief Custom omparator function passed to stdlib.h qsort()
- * 
+ * Pass in integers for this function.
+ * Pointers a casted to pointers to ints and
+ * then deref into integers for comparison.
  * @param p1 
  * @param p2 
  * @return int 
@@ -56,49 +29,6 @@ int sort_lt(const void* p1, const void* p2) {
     if (*(int*)p1 > *(int*)p2) return 1;
 }
 
-/**
- * @brief Reads prime numbers from files in the specified directory and stores them in a PrimeList.
- *
- * This function opens the given directory, iterates through all files excluding "." and "..",
- * and reads each line from the files in the "prime_files/" subdirectory. Each line is expected
- * to contain a prime number, which is converted to an integer and added to the PrimeList.
- *
- * @param pl Pointer to a PrimeList structure where the primes will be stored.
- * @param dir_name Name of the directory containing the prime files.
- * @return 0 on success, -1 on failure (if the directory or a file cannot be opened).
- */
-int get_primes(PrimeList* pl, const char* dir_name) {
-    system("cd prime_files/");
-
-    DIR* dir;
-    struct dirent* dp;
-
-    if ((dir = opendir(dir_name)) == NULL) {
-        printf("Could not open file %s.\n", dir_name);
-        return -1;
-    }
-
-    while ((dp = readdir(dir)) != NULL) {
-        if (strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0)
-            continue;
-        char path[256] = "prime_files/";
-        strcat(path, dp->d_name);
-        FILE* file = fopen(path, "r");
-        if (file == NULL) {printf("Error opening file: %s\n", path); return -1;}
-        
-        char* line = NULL;
-        size_t len = 0;
-        ssize_t read;
-        while ((read = getline(&line, &len, file)) != -1) {
-            pl->primes[pl->num_primes++] = atoi(line);
-        }
-
-        free(line);
-        fclose(file);
-    }
-
-    return 0;
-}
 
 
 /**
@@ -122,6 +52,10 @@ int clear_txt(const char* dir_name) {
         return -1;
     }
     
+    /*
+        Iterate through prime_files/ directory and delete all files.
+        Prevents attempt to remove parent and current directory.
+    */
     while ((dp = readdir(dir)) != NULL) {
         if (strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0)
             continue;
@@ -245,7 +179,7 @@ int main(int argc, char* argv[]) {
 
         // child process
         if (pid == 0) {
-            if (execl("./worker", range, upp_buff, (char*)NULL) == -1) {
+            if (execl("./worker", "./worker", range, upp_buff, (char*)NULL) == -1) {
                 printf("Failed to execute execl().\n");
                 return -1;
             }

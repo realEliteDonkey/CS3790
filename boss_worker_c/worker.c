@@ -7,6 +7,8 @@
 #define TRUE 1
 #define FALSE 0
 
+#define FILE_PATH_SIZE 512
+#define PID_DIGITS 10
 
 /**
  * @brief Worker program called by execl from boss.exe.
@@ -43,27 +45,49 @@
  */
 int main(int argc, char* argv[]) {
 
-    char file_name[128] = "prime_files/";
-    char pid_str[10];
+    char file_name[FILE_PATH_SIZE] = "prime_files/";
+    char pid_str[PID_DIGITS];
+
+    /*
+        Convert int: PID to string, and store in pid_str.
+        Concatenate the PID to the directory name (file_name).
+        Then we append.txt to the end to create the text file.
+    */
     sprintf(pid_str, "%d", (int)getpid());
     strcat(file_name, pid_str);
     strcat(file_name, ".txt");
 
     FILE* file = fopen(file_name, "w");
 
-    // receives [worker] [range] [lower_bnd] [upper_bnd]
-    int range       = atoi(argv[0]);
-    int upper_bound = atoi(argv[1]);
+    // receives [range] [upper_bnd]
+    int range       = atoi(argv[1]);
+    int upper_bound = atoi(argv[2]);
 
+    /*
+        Algorithm for finding primes:
+        1. Given an upperbound and a range, we can compute the lower bound
+           as upper_bound - range.
+        2. Target is computed as upper_bound - range.
+        3. We square root the target and name it target_bound. This bound is
+           used to be multiplies by 2 and up to the target bound itself.
+           IF the result of a multiplication equals the target, is_prime is set to
+           false, the loop breaks, and the system is not added to the list of primes.
+           IF the loop of multiplications finishes the loop without triggering the 
+           is_prime = FALSE, then the number is added to primes list.
+    */
     for (int target = upper_bound - range; target <= upper_bound; target++) {
         int is_prime = TRUE;
         int target_bound = (int)sqrt(target);
+
+        // Testing for primality
         for (int test = 2; test <= target_bound; test++) {
             if ((target % test) == 0) {
                 is_prime = FALSE;
                 break;
             }
         }
+
+        // Add primes to the unique PID file located in prime_files/
         if (is_prime && (target > 1)) {
             char target_str[64];
             if (target >= upper_bound - range) {
@@ -72,6 +96,8 @@ int main(int argc, char* argv[]) {
             }
         }
     }
+
+    fclose(file);
 
     return 0;
 }
