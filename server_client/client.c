@@ -5,10 +5,10 @@
 #include <sys/wait.h>
 #include <fcntl.h> // O_RDONLY, O_WRONLY
 
-int arg_valid(int argc, char* argv[]);
+static int arg_valid(int argc, char* argv[]);
 
 
-int arg_valid(int argc, char* argv[]) {
+static int arg_valid(int argc, char* argv[]) {
 	if (argc != 3) return -1;
 	return 0;
 }
