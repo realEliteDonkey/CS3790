@@ -45,6 +45,7 @@
  */
 int main(int argc, char* argv[]) {
 
+    printf("Enter worker.\n");
     char file_name[FILE_PATH_SIZE] = "prime_files/";
     char pid_str[PID_DIGITS];
 
@@ -92,6 +93,7 @@ int main(int argc, char* argv[]) {
             char target_str[64];
             if (target >= upper_bound - range) {
                 sprintf(target_str, "%d\n", target);
+                printf("%d\n", target);
                 fputs(target_str, file);
             }
         }
