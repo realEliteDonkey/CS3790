@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -49,6 +50,8 @@ int main(int argc, char* argv[]) {
     char file_name[FILE_PATH_SIZE] = "prime_files/";
     char pid_str[PID_DIGITS];
 
+    mkdir("prime_files", 0700);
+
     /*
         Convert int: PID to string, and store in pid_str.
         Concatenate the PID to the directory name (file_name).
@@ -59,10 +62,16 @@ int main(int argc, char* argv[]) {
     strcat(file_name, ".txt");
 
     FILE* file = fopen(file_name, "w");
+    if (!file) {
+        perror("fopen");
+        exit(1);
+    }  
 
     // receives [range] [upper_bnd]
     int range       = atoi(argv[1]);
     int upper_bound = atoi(argv[2]);
+
+    fflush(stdout);
 
     /*
         Algorithm for finding primes:
@@ -92,9 +101,9 @@ int main(int argc, char* argv[]) {
         if (is_prime && (target > 1)) {
             char target_str[64];
             if (target >= upper_bound - range) {
-                sprintf(target_str, "%d\n", target);
-                printf("%d\n", target);
-                fputs(target_str, file);
+                fprintf(file, "%d\n", target);
+                printf("%d <-\n", target);
+                fflush(stdout);
             }
         }
     }
