@@ -42,7 +42,7 @@ This creates a **cyclic time-sharing effect** — like a simple operating system
 ## Example Output
 
 ```bash
-$ ./scheduler 3
+$ ./main 3
 Pushing back PID...
 (Len: 1) [H: 1234]
 Pushing back PID...
