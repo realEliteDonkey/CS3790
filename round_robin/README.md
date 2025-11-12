@@ -1,4 +1,4 @@
-# 🧭 Round Robin Process Scheduler (C)
+# Round Robin Process Scheduler (C)
 
 This project implements a simple **Round Robin scheduler** in C using **UNIX signals** and **process control**.  
 It spawns multiple child processes (each running a separate `period` program) and schedules them in a circular fashion —  
@@ -6,7 +6,7 @@ allowing each process to run for a fixed time slice (3 seconds) before pausing i
 
 ---
 
-## ⚙️ Features
+## Features
 
 - Implements **Round Robin scheduling** using:
   - `fork()` to create child processes
@@ -22,7 +22,7 @@ allowing each process to run for a fixed time slice (3 seconds) before pausing i
 
 ---
 
-## 🚀 How It Works
+## How It Works
 
 1. The **scheduler** reads an integer `N` from command-line arguments (number of processes to create).
 2. It spawns `N` child processes using `fork()` and `execl("./period", "period", letter, NULL)`  
@@ -39,7 +39,7 @@ This creates a **cyclic time-sharing effect** — like a simple operating system
 
 ---
 
-## 🧠 Example Output
+## Example Output
 
 ```bash
 $ ./scheduler 3
@@ -57,16 +57,16 @@ Sig handler triggered.
 ```
 
 ## Building and Running
-#Build
+# Build
 ```bash
 gcc main.c RingList.c -o main
 gcc period.c -o period
 ```
-#Run
+# Run
 ```bash
 ./main <num_processes>
 ```
-#Example
+# Example
 ```bash
 ./main 5
 ```
