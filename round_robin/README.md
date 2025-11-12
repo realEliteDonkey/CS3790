@@ -43,16 +43,12 @@ This creates a **cyclic time-sharing effect** — like a simple operating system
 
 ```bash
 $ ./scheduler 3
-Number of processes to spawn: 3
 Pushing back PID...
-(Len: 1) [Head: 1234]
+(Len: 1) [H: 1234]
 Pushing back PID...
-(Len: 2) [Head: 1234] -> [Tail: 1235]
+(Len: 2) [H: 1234] -> [T: 1235]
 Pushing back PID...
-(Len: 3) [Head: 1234] -> 1235 -> [Tail: 1236]
-
-Sig handler triggered.
-Sig handler triggered.
+(Len: 3) [H: 1234] -> 1235 -> [T: 1236]
 ...
 ```
 
